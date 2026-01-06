@@ -1,0 +1,1350 @@
+From brian@sparkadvisors.com Mon Jan 05 18:26:55 2026
+Delivered-To: michael@sparkadvisors.com
+Received: by 2002:a17:907:2d9f:b0:b83:3668:7d16 with SMTP id gt31csp936353ejc;
+        Mon, 5 Jan 2026 10:26:55 -0800 (PST)
+X-Received: by 2002:a53:ee11:0:b0:63e:2dac:4bc4 with SMTP id 956f58d0204a3-6470c8e456bmr261306d50.49.1767637615161;
+        Mon, 05 Jan 2026 10:26:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767637615; cv=none;
+        d=google.com; s=arc-20240605;
+        b=apCH7Mr0Wgd4wlUJh8CtIgu0llOrUTFSfmPFhJArxmXAMu0VIKsKnE+ScaxF6eItPF
+         uIadrFQmg37VU2DWYjbhs3EFOkbImcFexLPAjLfcSGKxOjS8h8Gt/LkpunpMFEPjZlxJ
+         dEwWVyNE9iHIJaeQ7vMHwWCt9JAljtfSFITZZN5SAceykKBHx6bswioYsGo491fTKmTi
+         cNchHX9VjearW8PgTQWPh3IV0HTcgbBDPbd0bpeALxtd624BaNBn6UNcxuimcgmLNiIL
+         LxGX/9dPjLWH1h/ttPiOfKy9Yqn5X0eDfuAB7ToBBNsH7VVauWQmqaKd+9aXEg1fabq/
+         e1xA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=fndippZukRJsNOaOmmHiaxeLhaLCRWJYHnFLKk4C21w=;
+        fh=bBRFyrZ9VXy2CkmlpqQZ4cjMoGVoN0hp3iWA/D/tljU=;
+        b=jpjldowZm/0mkUAJmA0XOVcQRzX8g6O6xFbBFHd3r00I1ysa2erS3+2skyVf1VHVE5
+         Pn1TyFIaucSuRgldIZHonveHE6VpeOMLJYhWgPzky3IviBRA+znLGFg+CM/LLtLyqZq2
+         KDP8SVZ+u7hZhFPsR0Q7CuvHSMsY5WCq+VqYpkPu8IU4toIFIzaAyRkGM4EGT0bibtT1
+         KvfhYsSGauWI20kDoNXi6m6BxMfpRh4MF02dufubsvJ8H9Ge/6M7nUvncHkNS005ByHO
+         mq/tsOwaaJMa+Wytk3Y/h/372kOvbbng4W9xyz0aZr+8LL6ZeTDOp0g85lIkSuQUngeF
+         8tVg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=WqA6WHur;
+       spf=pass (google.com: domain of brian@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=brian@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+Return-Path: <brian@sparkadvisors.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 956f58d0204a3-6470c3d457fsor239338d50.8.2026.01.05.10.26.54
+        for <michael@sparkadvisors.com>
+        (Google Transport Security);
+        Mon, 05 Jan 2026 10:26:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of brian@sparkadvisors.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=WqA6WHur;
+       spf=pass (google.com: domain of brian@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=brian@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sparkadvisors.com; s=google; t=1767637614; x=1768242414; darn=sparkadvisors.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fndippZukRJsNOaOmmHiaxeLhaLCRWJYHnFLKk4C21w=;
+        b=WqA6WHurdcjK4yEOHXq+LBbKHTbGJdMcH13TdaV+AiDgJqs02/d7LeYS/0NWiMlKga
+         MUuz7VDjF0sHSgnDFx+P7Zpy21g0kcBXOkEX2Cj29VHq0VtRAx8DqhLWkMu/cD3rFPG1
+         4pi7/EvPu97p5GvGimSXLqGgZ8zaIkZ6tDWcA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767637614; x=1768242414;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fndippZukRJsNOaOmmHiaxeLhaLCRWJYHnFLKk4C21w=;
+        b=gE1XsdHl2MjkyALCpotFHF8kVwD7QsPvo+Dk/dt0neZ65wRTblzN1aIjZyAI9DhiDB
+         wx/MXRNEV1fvUO+QzgIXabDAx2xMfg6u/yjSuXU/rUUnK3ddbUZEtnmHQGmZrJ3tA7m9
+         xSFiw8pTKtxrgWZ39AlcQSev40xF9IcPLzDyoA68efn9C6V3YDaoPLreHAGFKShuYgBK
+         e2ohK5L0wyX5G9KX1ApzoWpHjgdqTFJfvsq8HHofqbdx5E1fD91j2HMGn3OdX4nlVPLX
+         m3fSpSWJMb4NUiDUUbaTRNBWc4qbzDmnQlZwX0on9LztKyCF/gaSoOLBVBUdKBSbm3Aj
+         umqQ==
+X-Gm-Message-State: AOJu0YxHYoa/hc74FhDxKGM6GhTC2hgRZquvu6s2lYOUnJUxAqJsQiC8
+	yHRd8ygZ3B80AfzT9r+scbCpkusov6yo1ONXFnP20VU9WohWITSL9YArGM83Zqo50Idz1/VyaZ8
+	Yu5jKRjZRyGK25+R2I/mlgBJWQFS256Ce/yB2nWv9LZYXBRpguyvPnUR4Ug==
+X-Gm-Gg: AY/fxX6/c+Lj/tYduaeGqsZ27jw647dGd26b0vnLjrEGYBh4Iul3fGkyqKCcy1ngf5d
+	pqM7E6dxrqwL0ZoD+bf4HryGv46oLDMXW5dGm+jUSVm7FiN9Lqu32zDF54V+jXRtFi0F73MFAnZ
+	gO4kEfKLQ4nbQS5An/5ruLh5IloNL9J2jDyC+aahPNoMNY3tOYPmq1Wa0hR26VjsqWAh2X5Tlqz
+	qYoLEfLe/nAntmL5YgGqITdwwuOHS2IucsPZUkoSNkDtNuG/9NtkHOAhTqxX2MfDovkoylFOh8L
+	UHfMpTpt+j0MNmSpTzsPF+hrrnE=
+X-Google-Smtp-Source: AGHT+IEMTPLz9hI6IYViPbO4YCnWo2VhSTn3PPx/KCBDDyoDB0WABScJ9B0N5a6rOsUpv32KsuLYXCHk14WT6FGvgTo=
+X-Received: by 2002:a53:b250:0:b0:640:dd53:71aa with SMTP id
+ 956f58d0204a3-6470c8e2208mr268961d50.46.1767637614412; Mon, 05 Jan 2026
+ 10:26:54 -0800 (PST)
+MIME-Version: 1.0
+From: Brian Wu <brian@sparkadvisors.com>
+Date: Mon, 5 Jan 2026 13:26:43 -0500
+X-Gm-Features: AQt7F2qx1GC0qz3QWbNXbdE1QwulFUcS5VME7Q-gX3bsuZpATsHfwJTjgW3W1DM
+Message-ID: <CA+bzj_BoY0Ap03W7_F=mBHunQOyoh=SmDAiv7104i8DgJiUY1w@mail.gmail.com>
+Subject: AI Learnings: Discovery
+To: Michael Beveridge <michael@sparkadvisors.com>
+Content-Type: multipart/alternative; boundary="0000000000001958880647a8347d"
+
+--0000000000001958880647a8347d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+SYSTEM CONTEXT
+- Tool: ChatGPT (large language model)
+- Model: GPT-5.x family (exact subversion not explicitly confirmed)
+- Interaction mode: Conversational, text-based, iterative prompting
+- Usage pattern: On-demand analysis, drafting, and structuring
+- Uncertainty: System-level tooling beyond core chat (e.g., browsing, file
+search) inferred but not always invoked
+
+WORKING STYLE SUMMARY
+- Provides clear constraints, scope boundaries, and formatting rules
+- Uses AI as a thinking partner for structuring, framing, and refinement
+- Prefers concise, direct outputs over exploratory verbosity
+- Iterates by tightening requirements rather than broadening questions
+- Treats AI as a utility for decision support, not authorship delegation
+
+WHAT THIS STYLE ENABLES
+- Fast convergence on structured artifacts (plans, specs, OKRs, role
+definitions)
+- High signal-to-noise outputs suitable for sharing with colleagues
+- Effective translation of ambiguous problems into clear frameworks
+- Reduced rework due to explicit constraints and success criteria
+- Efficient use of AI time for synthesis rather than ideation sprawl
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Limits discovery of non-obvious alternatives due to early constraint
+setting
+- Reduces usefulness of generative or divergent-thinking capabilities
+- Can underutilize AI=E2=80=99s ability to surface weak signals or edge cas=
+es
+- May bias outputs toward confirmation of existing mental models
+- Less effective when the problem itself is not yet well-formed
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended creative exploration without predefined success criteria
+- Early-stage brainstorming where constraints should remain loose
+- Tasks requiring emotional calibration or motivational framing
+- Situations where value comes from surprise rather than precision
+- Work that depends on tacit, unarticulated preferences
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Run a two-pass interaction: first pass explicitly invites unconstrained
+alternatives; second pass applies your normal strict constraints to select
+or refine outputs
+- Time-box the unconstrained pass to limit sprawl (e.g., =E2=80=9Cgenerate =
+5
+options, no analysis=E2=80=9D)
+- Keep evaluation criteria hidden from the first pass to avoid anchoring
+- Compare results against your usual single-pass approach for delta value
+
+--0000000000001958880647a8347d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">SYSTEM CONTEXT<br>- Tool: ChatGPT (large language model)<b=
+r>- Model: GPT-5.x family (exact subversion not explicitly confirmed)<br>- =
+Interaction mode: Conversational, text-based, iterative prompting<br>- Usag=
+e pattern: On-demand analysis, drafting, and structuring<br>- Uncertainty: =
+System-level tooling beyond core chat (e.g., browsing, file search) inferre=
+d but not always invoked<br><br>WORKING STYLE SUMMARY<br>- Provides clear c=
+onstraints, scope boundaries, and formatting rules<br>- Uses AI as a thinki=
+ng partner for structuring, framing, and refinement<br>- Prefers concise, d=
+irect outputs over exploratory verbosity<br>- Iterates by tightening requir=
+ements rather than broadening questions<br>- Treats AI as a utility for dec=
+ision support, not authorship delegation<br><br>WHAT THIS STYLE ENABLES<br>=
+- Fast convergence on structured artifacts (plans, specs, OKRs, role defini=
+tions)<br>- High signal-to-noise outputs suitable for sharing with colleagu=
+es<br>- Effective translation of ambiguous problems into clear frameworks<b=
+r>- Reduced rework due to explicit constraints and success criteria<br>- Ef=
+ficient use of AI time for synthesis rather than ideation sprawl<br><br>WHE=
+RE THIS STYLE MAY LIMIT OUTCOMES<br>- Limits discovery of non-obvious alter=
+natives due to early constraint setting<br>- Reduces usefulness of generati=
+ve or divergent-thinking capabilities<br>- Can underutilize AI=E2=80=99s ab=
+ility to surface weak signals or edge cases<br>- May bias outputs toward co=
+nfirmation of existing mental models<br>- Less effective when the problem i=
+tself is not yet well-formed<br><br>WHERE THIS STYLE IS A POOR FIT FOR AI<b=
+r>- Open-ended creative exploration without predefined success criteria<br>=
+- Early-stage brainstorming where constraints should remain loose<br>- Task=
+s requiring emotional calibration or motivational framing<br>- Situations w=
+here value comes from surprise rather than precision<br>- Work that depends=
+ on tacit, unarticulated preferences<br><br>ONE ADJUSTMENT TO EXPERIMENT WI=
+TH<br>- Run a two-pass interaction: first pass explicitly invites unconstra=
+ined alternatives; second pass applies your normal strict constraints to se=
+lect or refine outputs<br>- Time-box the unconstrained pass to limit sprawl=
+ (e.g., =E2=80=9Cgenerate 5 options, no analysis=E2=80=9D)<br>- Keep evalua=
+tion criteria hidden from the first pass to avoid anchoring<br>- Compare re=
+sults against your usual single-pass approach for delta value</div>
+
+--0000000000001958880647a8347d--
+
+From michael@sparkadvisors.com Mon Jan 05 18:44:13 2026
+From: Michael Beveridge <michael@sparkadvisors.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: AI Learnings: Discovery
+X-Universally-Unique-Identifier: A29A56E3-F4F2-4E84-A3AE-6577F3B62EFE
+Message-Id: <688F2588-ECFC-47A1-8A94-242DD869EE93@sparkadvisors.com>
+Date: Mon, 5 Jan 2026 10:44:13 -0800
+To: Michael Beveridge <michael@sparkadvisors.com>
+
+SYSTEM CONTEXT
+- Tool: ChatGPT (general-purpose large language model)
+- Interaction mode: extended analytical collaboration with iterative =
+refinement
+- Memory usage: persistent context leveraged across long-running =
+technical threads
+- Uncertainty: exact model variant may change across sessions, but =
+behavior is consistent with a reasoning-capable LLM
+
+WORKING STYLE SUMMARY
+- You treat the AI as a cognitive collaborator, not an assistant or =
+generator
+- You provide precise constraints, definitions, and boundary conditions =
+up front
+- You focus on system behavior, correctness, and internal consistency =
+over polish
+- You iterate by debugging, refining, and stress-testing logic rather =
+than brainstorming
+- You explicitly manage scope, assumptions, and failure modes
+
+WHAT THIS STYLE ENABLES
+- Deep analysis of complex, interdependent systems (data pipelines, =
+ranking logic, UX frameworks)
+- Rapid identification of edge cases, mismatches, and conceptual bugs
+- High-fidelity translation between domain knowledge and executable =
+logic
+- Efficient continuation across sessions without re-laying basic context
+- Productive use of AI for design reasoning, technical review, and =
+synthesis
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Reduced exploration of unconventional or weakly formed ideas
+- Less leverage from the AI in early-stage ambiguity or divergent =
+ideation
+- Higher cognitive load on you to fully specify problems before =
+engagement
+- Potential underuse of the AI=E2=80=99s generative or associative =
+capabilities
+- Risk of converging too quickly on =E2=80=9Ccorrect=E2=80=9D solutions =
+within a narrow frame
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended creative generation where constraints are intentionally =
+loose
+- Emotional, motivational, or perspective-shifting conversations
+- Situations requiring the AI to infer goals without explicit problem =
+framing
+- Rapid, low-stakes ideation where precision is unnecessary
+- Tasks where ambiguity itself is the primary input
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Run a two-pass interaction: first allow an intentionally =
+under-specified prompt for divergent output, then apply your usual =
+constraint-heavy refinement in a second pass
+- Time-box the first pass to limit noise and preserve your analytical =
+preference
+- Treat the first pass explicitly as disposable input, not a candidate =
+solution
+- Compare outcomes against your standard single-pass, tightly scoped =
+approach=
+
+From kayla.prata@sparkadvisors.com Mon Jan 05 21:22:36 2026
+Delivered-To: michael@sparkadvisors.com
+Received: by 2002:a17:907:2d9f:b0:b83:3668:7d16 with SMTP id gt31csp1023099ejc;
+        Mon, 5 Jan 2026 13:22:36 -0800 (PST)
+X-Received: by 2002:a05:6402:42cf:b0:64b:3a87:44ff with SMTP id 4fb4d7f45d1cf-650797aea6emr656362a12.34.1767648156630;
+        Mon, 05 Jan 2026 13:22:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767648156; cv=none;
+        d=google.com; s=arc-20240605;
+        b=W7+7giCPBny6KvJwcZwjk+ASrLWplnJc/JNCNtEqUi4g2blmbMV6yR0WGAd/Z6oWLv
+         414OlWoAUtBSfy7XMfuuCO92Q6+r/DUhgEMEeYSxNIbVK1gwyhgKyQj21yzuY0BYzz1f
+         kS8oGRphl9kF4KNuBWCb+kD8IBb7/nRc6vITLhSFtdvOSpfkG6aSPyPwCkHteYY5JrXQ
+         prz8XMnUezIwsqVoHsjN8yI/vUOBaTMXHOLEZYrQ7IO+YqEvTey0hkashh9nAJJzGHyZ
+         tGQiao0reKNntf5H0nWRJtSONn736q9O79PbXNn+uQB7fLYZQgQF/bYnjYAoBTSZUes1
+         28IQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=tDTrfiQuCYlc98RqFUR9DF0rSJMCbMZl9t+IHOJblNY=;
+        fh=bBRFyrZ9VXy2CkmlpqQZ4cjMoGVoN0hp3iWA/D/tljU=;
+        b=DR3AZY3ajjT9sYl/TtSUwXkY4raYyuZRrL+6MuSmjPP8xOunWwN/dI5JAUWZI9hpjW
+         B7LUbLlWU5O1ZzgAmxZ5XN59KzqELhJsn3bhmdolHqqBZMquc4ShRTbgvFhbt/JgWHaF
+         zTsW+aP/VXJjhGOM4kecOJpR7OBKHNX4tw0kHzilN+OrMsf/dqdYjDzZS05tu1dgYbM1
+         FuySWWobFr5MPbnuHfB7/Y2mWkg3xcr+KrzoI7cE21I7XZ2tXZ5dPeIc6n3SdNSxZRm+
+         z9bZYYGqv8QSMivC/ZUlmiGUffJ0ktAk23d9Wf1QAO5c8kURA7/r0B+O8Vh73i0zda7W
+         0vsg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=aCnEOQcy;
+       spf=pass (google.com: domain of kayla.prata@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=kayla.prata@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+Return-Path: <kayla.prata@sparkadvisors.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 4fb4d7f45d1cf-6507be64222sor70328a12.14.2026.01.05.13.22.36
+        for <michael@sparkadvisors.com>
+        (Google Transport Security);
+        Mon, 05 Jan 2026 13:22:36 -0800 (PST)
+Received-SPF: pass (google.com: domain of kayla.prata@sparkadvisors.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=aCnEOQcy;
+       spf=pass (google.com: domain of kayla.prata@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=kayla.prata@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sparkadvisors.com; s=google; t=1767648156; x=1768252956; darn=sparkadvisors.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tDTrfiQuCYlc98RqFUR9DF0rSJMCbMZl9t+IHOJblNY=;
+        b=aCnEOQcyAYQ25SbSV93SheHWhqqg/IK0q1hAw3zJggqH+vh6IQLkfCE6bzwfxQUk4A
+         7ucbzcc7sSMuSD4+XNdkfvPgfL6f/u9bqu/jEyk0MJqzu17ytXBv5cGWQ2oloFNwsm7S
+         Eny8kdFQI8kv3hwvQ5gkBlGhdXZJGX8Su4fas=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767648156; x=1768252956;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tDTrfiQuCYlc98RqFUR9DF0rSJMCbMZl9t+IHOJblNY=;
+        b=SZLHd9z7+5R6c8mws8NcE0e9nFfwtyRzA7pgI3tBdl7vRAHMJUkyqyOnfyS/dNplM8
+         4WSUXqCtL6jTLZNTPZtIhpMUR7vViVYaDQPamtTaKfaCYNOMc1K044SHyJrgutCD91CF
+         skw+LtttgEJmqsscbTN517ts9br3TAgvNu+4AIsS3T10jtxatHi2hkpscooDkK3HCJhW
+         6/3dWx5LknV/95YhSvFEaG4sgqumv0Ppv9uQmc9YniYzyyzewBeHt/QCZECL2hHse/lm
+         k2aAZvGvCXiLKaJmEV8A1R3m+lutAlnYCsMVPAZt42P2/EdDvx05CfBSxsNrknhlEfdL
+         QuVg==
+X-Gm-Message-State: AOJu0Yy+gSeB4R+oMXi1jG2Z3bgHtlAcIs78MFhCqkrKuAkDI2m0V393
+	gKiRIHWb778Z3zkTd+NvIFC+af0064sXjqlidoYVc6ZZymnKBLlm63wadsOLZJnSi290E83RFTl
+	hLP26HfMZsLAF+F5x3Fwz0oCyH/OQ6VMhM+c2bLO1fko/fBbooZrCcq+gauxp
+X-Gm-Gg: AY/fxX5+TNNuvtLL/YErQavk2ZUMUX4HgbgmBtUlQy/GHuk4qUtTopbxakJQb6HK/fz
+	gI3OP3XjjYcx5OYjN2tQFrkpmgUhcpnis6+kBm/Wi77+XsofYG6hQeX6NSdLWGxi2Z4Q2jDUq+u
+	g+b1IH/BXN37iovDfArAUthfZa3jY0sEfB1nyWqBEjWVfRi55BgOZmwpMDuYVAF2eLnnTdrvQeO
+	RMDJQMrjjWyA4WcUYLcrn6N4JuQPdxjnU0T07IXPN4f+IGgmIim/+orF9qnlQmx8JzjWGQPCgnf
+	PKjK6u5lQksnOp+EYIEvCsNwercr
+X-Google-Smtp-Source: AGHT+IGXYmV9wxRcJ7/l0PVzhXONxxkBrXBIRBsZSFVlRXab6DdL9703l1b72G5ylez5J89TPItq+5D52FR/17s350E=
+X-Received: by 2002:a05:6402:1d4e:b0:64d:1762:9be3 with SMTP id
+ 4fb4d7f45d1cf-65079322480mr652178a12.8.1767648155637; Mon, 05 Jan 2026
+ 13:22:35 -0800 (PST)
+MIME-Version: 1.0
+From: "Kayla 'KP' Prata" <kayla.prata@sparkadvisors.com>
+Date: Mon, 5 Jan 2026 16:22:24 -0500
+X-Gm-Features: AQt7F2ozcZ8slj4Fmzby4xfD_lofEUZJo9eZ_PHgXUAM5yp67AmcrvXsAcU7IkU
+Message-ID: <CAA0a8i757SyFnUkm2hGg57AjyS2sbEmXw5VGWdhV_ZJNxbq4Ug@mail.gmail.com>
+Subject: AI Learnings: Discovery
+To: Michael Beveridge <michael@sparkadvisors.com>
+Content-Type: multipart/alternative; boundary="00000000000067a4ec0647aaa8ae"
+
+--00000000000067a4ec0647aaa8ae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+SYSTEM CONTEXT
+- Tool: ChatGPT (general-purpose large language model)
+- Interaction mode: iterative, conversational, task-driven prompting
+- Context persistence: multi-turn with long-term memory references
+- Uncertainty: exact internal model variant and memory weighting are opaque
+- Usage pattern: frequent reuse as a technical collaborator rather than a
+Q&A system
+
+WORKING STYLE SUMMARY
+- Provides detailed, constraint-heavy prompts with explicit boundaries
+- Treats the AI as an execution partner for synthesis, drafting, and
+transformation
+- Focuses on operational clarity, edge cases, and implementation readiness
+- Iterates rapidly, correcting outputs with precise, technical feedback
+- Prioritizes structure, correctness, and reusability over exploration
+
+WHAT THIS STYLE ENABLES
+- High-quality outputs for complex systems, workflows, and technical
+documentation
+- Efficient translation of domain knowledge into artifacts (scripts, SOPs,
+prompts)
+- Strong alignment between intent and output due to tight scoping
+- Reduced ambiguity and lower risk of unusable or vague responses
+- Effective use of AI for scaling thinking across large, interdependent
+problems
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Constrains the AI=E2=80=99s ability to surface unexpected patterns or alt=
+ernatives
+- Front-loads cognitive effort that the AI could partially absorb
+- Can bias outputs toward existing assumptions or preferred architectures
+- Limits divergent thinking or reframing of the problem space
+- Reduces usefulness for early-stage ideation or problem discovery
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended creative exploration without defined success criteria
+- Situations requiring emotional judgment, persuasion, or narrative
+intuition
+- Work that depends on tacit organizational politics or informal context
+- Tasks where uncertainty itself is the primary variable to explore
+- Brainstorming when constraints are not yet known or stable
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Run a two-pass workflow where the first pass is intentionally under-scope=
+d
+- Allow the AI to propose structures, risks, or options before constraining
+it
+- Compare outcomes against your usual fully-specified prompting approach
+- Limit the experiment to low-risk tasks to observe signal without
+disruption
+- Evaluate whether any novel insights emerge without reducing execution
+quality
+
+--00000000000067a4ec0647aaa8ae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">SYSTEM CONTEXT<br>- Tool: ChatGPT (general-purpose large l=
+anguage model)<br>- Interaction mode: iterative, conversational, task-drive=
+n prompting<br>- Context persistence: multi-turn with long-term memory refe=
+rences<br>- Uncertainty: exact internal model variant and memory weighting =
+are opaque<br>- Usage pattern: frequent reuse as a technical collaborator r=
+ather than a Q&amp;A system<br><br>WORKING STYLE SUMMARY<br>- Provides deta=
+iled, constraint-heavy prompts with explicit boundaries<br>- Treats the AI =
+as an execution partner for synthesis, drafting, and transformation<br>- Fo=
+cuses on operational clarity, edge cases, and implementation readiness<br>-=
+ Iterates rapidly, correcting outputs with precise, technical feedback<br>-=
+ Prioritizes structure, correctness, and reusability over exploration<br><b=
+r>WHAT THIS STYLE ENABLES<br>- High-quality outputs for complex systems, wo=
+rkflows, and technical documentation<br>- Efficient translation of domain k=
+nowledge into artifacts (scripts, SOPs, prompts)<br>- Strong alignment betw=
+een intent and output due to tight scoping<br>- Reduced ambiguity and lower=
+ risk of unusable or vague responses<br>- Effective use of AI for scaling t=
+hinking across large, interdependent problems<br><br>WHERE THIS STYLE MAY L=
+IMIT OUTCOMES<br>- Constrains the AI=E2=80=99s ability to surface unexpecte=
+d patterns or alternatives<br>- Front-loads cognitive effort that the AI co=
+uld partially absorb<br>- Can bias outputs toward existing assumptions or p=
+referred architectures<br>- Limits divergent thinking or reframing of the p=
+roblem space<br>- Reduces usefulness for early-stage ideation or problem di=
+scovery<br><br>WHERE THIS STYLE IS A POOR FIT FOR AI<br>- Open-ended creati=
+ve exploration without defined success criteria<br>- Situations requiring e=
+motional judgment, persuasion, or narrative intuition<br>- Work that depend=
+s on tacit organizational politics or informal context<br>- Tasks where unc=
+ertainty itself is the primary variable to explore<br>- Brainstorming when =
+constraints are not yet known or stable<br><br>ONE ADJUSTMENT TO EXPERIMENT=
+ WITH<br>- Run a two-pass workflow where the first pass is intentionally un=
+der-scoped<br>- Allow the AI to propose structures, risks, or options befor=
+e constraining it<br>- Compare outcomes against your usual fully-specified =
+prompting approach<br>- Limit the experiment to low-risk tasks to observe s=
+ignal without disruption<br>- Evaluate whether any novel insights emerge wi=
+thout reducing execution quality<br></div>
+
+--00000000000067a4ec0647aaa8ae--
+
+From britney.cummings@sparkadvisors.com Mon Jan 05 21:52:00 2026
+Delivered-To: michael@sparkadvisors.com
+Received: by 2002:a17:907:2d9f:b0:b83:3668:7d16 with SMTP id gt31csp1035342ejc;
+        Mon, 5 Jan 2026 13:52:01 -0800 (PST)
+X-Received: by 2002:a05:690e:408a:b0:644:472d:daf8 with SMTP id 956f58d0204a3-6470c563b34mr826937d50.0.1767649920907;
+        Mon, 05 Jan 2026 13:52:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767649920; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UFc7w8As6JwmJYAn0yuSkw4WOPMidGPYtiyeAC9v48CNF9upx5vDcsE3PVL/tw+qoc
+         kwDDBy0KRscqFj56/EH7WGI2KOQKuR7iFjo1z2N1/7G7P4VRGlgiJQJfxre0G5UiE2n9
+         b7+GVPPk8UyTBR7GNnv8DKfuiSfhea+h3AVmRYH8ORb34gnr9+PXWIaWgeDlwwiJavrk
+         oFAZYg9C4JtxquOjv9J+3Z0b8vzCYDZE3jMhJXhQI+DobFc5zoCZ0ousJ4cAnHVPHEzV
+         I2d89Kho26Kj2ZRUcifjIsasKsdPEftz1LRaThB0ueMsOCUNqnpYAWKfQxx2sSzS1yuU
+         /ikw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=/TVyeesZZyztSwIbW0VncHQd5dk10ceEeZeryV4xhzE=;
+        fh=bBRFyrZ9VXy2CkmlpqQZ4cjMoGVoN0hp3iWA/D/tljU=;
+        b=ig3SK3TpHvTmEiamr4Ju12Pj9UzGv3GsPpGten9iYoK/vl8L3gwDUVwAGQkfMP3odD
+         AZR71tzU1Aq6DtN4K8PZGEG3NnOFFobN7Y9P0+J2EIzUUT8iv65KDYqM01RuN/Jjpmi0
+         oZbGYviGPr/4aSreRnWsIpISA1Hz1XsbIPtn1tQ7TWoadlozB16NOKJTTKxqWLg0h8Ze
+         TayraYc5VyLD2/srnZfkxiViIu6VRfIlJW2fs+9ggb00/H7zzBVlKv/oFzgKk3cZAQfJ
+         3P/0GbmBuCYme4Fo/HAGKYJK9Lq1hoFqmF5h5DXbnaVFsGrx5imbooIfLbxRJwaQfSMh
+         0Xyg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=Uln4w+Sw;
+       spf=pass (google.com: domain of britney.cummings@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=britney.cummings@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+Return-Path: <britney.cummings@sparkadvisors.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 956f58d0204a3-6470d813dc2sor161915d50.5.2026.01.05.13.52.00
+        for <michael@sparkadvisors.com>
+        (Google Transport Security);
+        Mon, 05 Jan 2026 13:52:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of britney.cummings@sparkadvisors.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=Uln4w+Sw;
+       spf=pass (google.com: domain of britney.cummings@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=britney.cummings@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sparkadvisors.com; s=google; t=1767649920; x=1768254720; darn=sparkadvisors.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/TVyeesZZyztSwIbW0VncHQd5dk10ceEeZeryV4xhzE=;
+        b=Uln4w+Swrqs+th/LAfHVTDOHbPuhl9krYwViY9SYMYOXQUsMI9oa6s2nV+O6lLFVo0
+         9c77zvkCra+OhlDh4AGkvMComXJoXIe0FVVBKhWEOxsh292PB0RpZAl6DeLYs8x/bQge
+         bLx7f+qNAUMRIPPRCEW5hJX82Fmtp+CRR9KBU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767649920; x=1768254720;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/TVyeesZZyztSwIbW0VncHQd5dk10ceEeZeryV4xhzE=;
+        b=N6JsCK0AaN3UsmYumVyuPNVUbJRWHJO+h47rZGVLCsHDwR2vPtpeCOeGltecsF6dE6
+         oWzqrA4f0D9nWYH983pmhx5C0Q4xYNzvKfPiHtUg9eVqikWXbIQNjQPrdl0nMOEJzrB3
+         siyasZfkVMV+zMrb8M1Z0pE2jhmNbSHfdnrZn97juMqVt0F16jxg559tsIPdWOBIbC20
+         LKMhSlKN+gA+iXMetyXc2gV/FIpWcRyH1TXqTxBo/R+axyXaX2GN4n6FZByLcaTI0wPp
+         0DAcYhwtDQTMZWd2xRPG3Wh2bN3wWGGZ1I3SO9v/+Zjc8S/LtoOb8PosOWK4/UscOKYk
+         W8UA==
+X-Gm-Message-State: AOJu0YyX2MCykKq3ZHGTjCcZ+hOrAvkzvkAtDg82mCxfh4y40v9L3vK1
+	E5rM47y7VGBrc15R4+1+VkUalRcsiuOSpUK4UZ5LFp0chr3Xn7EJuYq4GNyuYO0CrfuAQoXRGgH
+	8kM8UkRHounbFJI0dh35uuS7IR53owCe0ULkqBC1TygYqQTKxOvnI0c0r+Udk
+X-Gm-Gg: AY/fxX5+drhg2+W/ADlgokKKsaz0tvXkkLRJDCP6ajXjlM2P/PNIOQkEqJCUlfFo2Cw
+	pgTTV850OuM7KT6/jC+xz0zX1FUz7C/XLyLTCwQAsdMEtTa6H8lRcPc6OKwQHR/rx44Uy8cFwML
+	NuI3IfKtwMYxR+D+nAdbRRmkPEs9RgDtW8I4MH5094iLu7l43B8+Zx6mIv1om0syZMumscfwyyV
+	qDzfpAjElu1VGOHbJo1GAL1aks7WsCt/WgoWnrbfFQ9vhnkwrz6MybM/JTfxzjoqRb6GkRJ7UnU
+	6YLIHe63aNOY9Mwbewe6LxQS0iV40g==
+X-Google-Smtp-Source: AGHT+IH6N32r2eTHks50Jc6XMTT++pU3FP/ljZfg6QGrQd552v2T2xSdOtFgFTELvzm3IzRUiznsL50y7bNCqBHdiME=
+X-Received: by 2002:a05:690e:1301:b0:644:7afd:f484 with SMTP id
+ 956f58d0204a3-6470c880a16mr714405d50.40.1767649919983; Mon, 05 Jan 2026
+ 13:51:59 -0800 (PST)
+MIME-Version: 1.0
+From: Britney Cummings <britney.cummings@sparkadvisors.com>
+Date: Mon, 5 Jan 2026 15:51:49 -0600
+X-Gm-Features: AQt7F2rALVEYwIrUOPYLOtA-KNPubnkuoQu_e_WP3fygLCCG2tEuCvVFZJ1rCnw
+Message-ID: <CA+Rn4Yzt+S9B+qxFk+MLKuF6DE0Mdsb4VofqS1ru0u-F_cLR2w@mail.gmail.com>
+Subject: AI Learnings: Discovery
+To: Michael Beveridge <michael@sparkadvisors.com>
+Content-Type: multipart/alternative; boundary="000000000000916ec20647ab11a7"
+
+--000000000000916ec20647ab11a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+SYSTEM CONTEXT
+- ChatGPT, web-based conversational interface, text-only interaction mode
+- Iterative, multi-turn drafting and refinement within a single thread
+- User provides detailed constraints, tone requirements, and corrective fee=
+dback
+- High confidence in system as a thinking and drafting partner, not a
+source of truth
+- Some uncertainty due to lack of visibility into any off-platform
+usage or tooling
+
+WORKING STYLE SUMMARY
+- Directive and constraint-heavy, with explicit rules and formatting
+requirements
+- Uses AI as a rapid drafting, restructuring, and clarity tool
+- Actively corrects assumptions and rejects speculative or inferred content
+- Iterates quickly, tightening scope and tone based on concrete needs
+- Focuses on practical outputs usable in real work contexts
+
+WHAT THIS STYLE ENABLES
+- Fast production of polished, work-safe drafts and artifacts
+- High alignment with organizational tone, standards, and constraints
+- Reduced ambiguity through explicit instructions and feedback loops
+- Effective error-checking of logic, structure, and clarity
+- Strong control over final output quality and usability
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Narrow scoping can reduce exploratory or generative value
+- Frequent constraint resets increase cognitive and interaction overhead
+- Low tolerance for assumption limits synthesis when inputs are incomplete
+- Emphasis on correctness may suppress alternative framings or insights
+- AI is underutilized for divergent thinking or option generation
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended discovery or blue-sky ideation without defined constraints
+- Situations requiring the AI to infer unstated goals or preferences
+- Early-stage problem framing when inputs are intentionally vague
+- Tasks where value comes from unexpected connections rather than precision
+- Work that depends on subjective judgment without explicit criteria
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Run a brief, explicitly labeled =E2=80=9Cexploration pass=E2=80=9D before=
+ applying constraints
+- Allow provisional assumptions during that pass, with later pruning
+- Time-box the exploration to limit scope creep
+- Treat outputs as disposable scaffolding rather than draft candidates
+- Evaluate whether this increases useful options without reducing control
+
+
+--=20
+=E2=80=94
+*Britney Cummings*
+*Manager, Customer Experience @ Spark*
+
+*[image: spark emoji]Spark Platform <https://platform.sparkadvisors.com/> |
+[image: ring buoy emoji]Help Center <https://sparkhelpcenter.super.site/>*
+
+--000000000000916ec20647ab11a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><pre><code class=3D"gmail-language-text">SYSTEM CONTE=
+XT
+- ChatGPT, web-based conversational interface, text-only interaction mode
+- Iterative, multi-turn drafting and refinement within a single thread
+- User provides detailed constraints, tone requirements, and corrective fee=
+dback
+- High confidence in system as a thinking and drafting partner, not a sourc=
+e of truth
+- Some uncertainty due to lack of visibility into any off-platform usage or=
+ tooling
+
+WORKING STYLE SUMMARY
+- Directive and constraint-heavy, with explicit rules and formatting requir=
+ements
+- Uses AI as a rapid drafting, restructuring, and clarity tool
+- Actively corrects assumptions and rejects speculative or inferred content
+- Iterates quickly, tightening scope and tone based on concrete needs
+- Focuses on practical outputs usable in real work contexts
+
+WHAT THIS STYLE ENABLES
+- Fast production of polished, work-safe drafts and artifacts
+- High alignment with organizational tone, standards, and constraints
+- Reduced ambiguity through explicit instructions and feedback loops
+- Effective error-checking of logic, structure, and clarity
+- Strong control over final output quality and usability
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Narrow scoping can reduce exploratory or generative value
+- Frequent constraint resets increase cognitive and interaction overhead
+- Low tolerance for assumption limits synthesis when inputs are incomplete
+- Emphasis on correctness may suppress alternative framings or insights
+- AI is underutilized for divergent thinking or option generation
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended discovery or blue-sky ideation without defined constraints
+- Situations requiring the AI to infer unstated goals or preferences
+- Early-stage problem framing when inputs are intentionally vague
+- Tasks where value comes from unexpected connections rather than precision
+- Work that depends on subjective judgment without explicit criteria
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Run a brief, explicitly labeled =E2=80=9Cexploration pass=E2=80=9D before=
+ applying constraints
+- Allow provisional assumptions during that pass, with later pruning
+- Time-box the exploration to limit scope creep
+- Treat outputs as disposable scaffolding rather than draft candidates
+- Evaluate whether this increases useful options without reducing control
+</code></pre></div><div><br></div><span class=3D"gmail_signature_prefix">--=
+ </span><br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gm=
+ail_signature"><div dir=3D"ltr"><div style=3D"margin:0px;padding:0px"><span=
+ style=3D"color:rgb(19,31,90);font-weight:700">=E2=80=94<br></span><b><span=
+ style=3D"color:rgb(19,31,90)">Britney Cummings</span></b></div><div style=
+=3D"margin:0px;padding:0px"><i><span style=3D"color:rgb(19,31,90)">Manager,=
+ Customer Experience @ Spark</span></i></div><div style=3D"margin:0px;paddi=
+ng:0px"></div><div dir=3D"ltr" style=3D"line-height:1.38"><br></div><div st=
+yle=3D"line-height:1.38" dir=3D"ltr"><b><span style=3D"border:none;display:=
+inline-block;width:23px;height:23px"><img alt=3D"spark emoji" src=3D"https:=
+//lh7-us.googleusercontent.com/KY4R2ftMu7kyJqyo9SpVSN9o4OuwrkX1xWjz9n2QHL2F=
+eIF3uTRELSqNKNz3nM9TZ0Nq8zk6JikEIjGARDo043BLVAYaEaIDBCyyGtA6vWSIWUVPdNR1eXr=
+136jh3HG6KCeaUs1As5prkde81Aog7V0" width=3D"23" height=3D"23" style=3D"margi=
+n-left:0px;margin-top:0px;width:15px;height:15px"></span><span style=3D"col=
+or:rgb(19,31,90)"><a rel=3D"noopener noreferrer" href=3D"https://platform.s=
+parkadvisors.com/" target=3D"_blank">Spark Platform</a> | </span><span styl=
+e=3D"border:none;display:inline-block;width:23px;height:23px"><img alt=3D"r=
+ing buoy emoji" src=3D"https://lh7-us.googleusercontent.com/QvpOKsZHnBCsaih=
+2tEN3ugC90UY-b2FEuiRzK1ZJdz75cTFJ838S6h7EdJQ2rhdICE7m2DPtFgp-GMvQIri_VnlU5s=
+D-m7vBk6vvFucJk0Yp8z5KcUas58IexqhjOyK2-WBAEm5a1ao9BcMa_OpqUB4" width=3D"23"=
+ height=3D"23" style=3D"margin-left:0px;margin-top:0px;width:12px;height:12=
+px"></span><a rel=3D"noopener noreferrer" href=3D"https://sparkhelpcenter.s=
+uper.site/" target=3D"_blank">Help Center</a></b></div></div></div></div>
+
+--000000000000916ec20647ab11a7--
+
+From sayaka.meyer@sparkadvisors.com Mon Jan 05 22:10:12 2026
+Delivered-To: michael@sparkadvisors.com
+Received: by 2002:a17:907:2d9f:b0:b83:3668:7d16 with SMTP id gt31csp1043945ejc;
+        Mon, 5 Jan 2026 14:10:12 -0800 (PST)
+X-Received: by 2002:a05:690e:13cb:b0:644:7b59:421c with SMTP id 956f58d0204a3-6470c846598mr926901d50.16.1767651012288;
+        Mon, 05 Jan 2026 14:10:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767651012; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gYTVhL1oIYhsCjcJ1zPzID1tvtdSRm4RiRKpRwqztSUvOx5cbQJ4ghLN33oNQdLrQs
+         TJf+YzjxPRyiS9qwOhOFwyL7KCZIXqYo2lOu+fZmbTp8K1lt7+dZJXtvvGNsPWwBcMPa
+         L9EnhKq9LVdNpPXeEuPyTpLS75Q7IfWfwx+1++0rCFmpNdx4sr9/17ErDjAQU39Whwpp
+         Qumy+1T75vmf1RV+rsV5DTPjgmoqLxYl3mchbPqUQaR9KQNTmAvxYuIc98pcRqpUWFc5
+         dtE6JWG/dRJwmUgR8mcSGaI3m1ygLL40z4Cp2m5+reZ3aK3pnPoOUSWbm1T4xeDhbO7+
+         EKzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=6UXcqSW8WMkE7GsIpKr7VIuORak2P5zCebY4QvYZpJY=;
+        fh=bBRFyrZ9VXy2CkmlpqQZ4cjMoGVoN0hp3iWA/D/tljU=;
+        b=GMMO39Yn+m/TcqX1oxbqjar8LRfST4Fmm+Ijb4bPMprEQSIlZ8Kxm1bWHXS4VYfzuI
+         jTfomKsTHy7Owf+ouA7WvzjX38DLuH9wpAFTAUh7qV8tG6vo9W0X4lif4RKtZm8tRogP
+         lnHoopwRa+SxDl5DNmCUgZGnK6O0bZ/aEkFlARDNpuqYVjAHheiR+tUpxeRU0u7wY54M
+         okj91BB7qd/24LVqU2xrczB6/6S+dqvPUYHDsFRKDADnCUbiWOYyU5wvFRNPqRPo75FH
+         SacpHv2rQJD3udWyxoOkp416QgEhgZDPjq1vPcQHXWOpnbY855d0BVEhfv99VKV1bEeB
+         XzhQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=HtIFMfHd;
+       spf=pass (google.com: domain of sayaka.meyer@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=sayaka.meyer@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+Return-Path: <sayaka.meyer@sparkadvisors.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 00721157ae682-790aa69eaf8sor1260197b3.13.2026.01.05.14.10.12
+        for <michael@sparkadvisors.com>
+        (Google Transport Security);
+        Mon, 05 Jan 2026 14:10:12 -0800 (PST)
+Received-SPF: pass (google.com: domain of sayaka.meyer@sparkadvisors.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=HtIFMfHd;
+       spf=pass (google.com: domain of sayaka.meyer@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=sayaka.meyer@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sparkadvisors.com; s=google; t=1767651011; x=1768255811; darn=sparkadvisors.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6UXcqSW8WMkE7GsIpKr7VIuORak2P5zCebY4QvYZpJY=;
+        b=HtIFMfHd9CP3WQvCpX5hNDgIJ7Yd55SpOFO4PWDG8Ca8RSP2EbzgJWaMLImVDdVJg7
+         vPaXPi074AdBg33cgg7w2fTWLj2lm0rUkJunX3kx4i0dl5B0PHfFt98kXZZxKIK5asfy
+         HVN76NgOixsgm3XzLAHmka3mKUBj3NNbmGlZQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767651011; x=1768255811;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6UXcqSW8WMkE7GsIpKr7VIuORak2P5zCebY4QvYZpJY=;
+        b=Yo4vvSgPRX23pd+8EUwFxcRvMa+7c42iKL8POP7fl2rujCGoabIyQe20SOfwEzj4zt
+         639VFL6FSncx6VkqBpBKqW85x9eo+jlPEJ7kQP+X6Z63IZD9XITMc7bt8Na3ehPWJEpl
+         cHeUNG28LwPVrgZfz5OhJ4/3T6ChMv8ZUJNTO4yN9GioW1Z6UCMAMa0KrzcCEVgb6rP2
+         MsHMIuLOmCgoSsPK2n+X8nfkoyXBLlbHGx19GPLGStpzSV6iDeIRdKc3Ts6BOnRAczkq
+         NeDzV2uyKuwGu9pE1HpnhQ8/hd31hIGFMfUPWKu9IOOrEdlG8Rc5Pr/sD4qNuS78avC5
+         KyDg==
+X-Gm-Message-State: AOJu0YyeOr05AceZmupFCr9oV0sUFYwxvBBx3Kvk32bjphOLotX8xfoh
+	RK798keRIE/QHt/QlF5wDfDyECNbT/0jR+UJNRzCCENV9FF7DCLB7daRF/WqPDxj0QKKtwyn7js
+	J7YcIRCigUeXuRRinJQoihvIhK+WcI3/dxeTjhRNmfYcuIKT6qXFcY47xvg==
+X-Gm-Gg: AY/fxX67zfhbdvN9h7AAY/EByXoen+Zi1fW5WmUMhPhCKnFRyIo08ABZyU8AsK6UXtf
+	FAdxFiBiNyoV2Mua1fUcDZ5PObKoxiV5wNu/x7KmwU7ARp2Xx/ZfIlmCkTUT99aoPk7YNkfoFrn
+	fWt0sDlIUojF7KIWIj1duqccifF8+qMjpsnUwReAHXBRbSJ851GzEzJp12pAF1wQQ5FSUB+um90
+	wvJ7rQ7nLSgHcrPNo629pMcovXGwyKZjlxgDTmcD68Wq5wevOfPo+TDIP6uchxRyBDX4/IOQ/89
+	98sTqpdmcfLSX9T3lOJosRNH0Pq30Q==
+X-Google-Smtp-Source: AGHT+IHHWi43/cGUzC1aJvqRiiJovSX8bI5OZVn9i3heKBYiqhVdnMQsiX7fSpAv3eQ28Trgzm4TKiamXPXf2Xz2LAU=
+X-Received: by 2002:a53:ea43:0:b0:644:4a82:304d with SMTP id
+ 956f58d0204a3-6470c952cdemr671792d50.82.1767651011525; Mon, 05 Jan 2026
+ 14:10:11 -0800 (PST)
+MIME-Version: 1.0
+From: Sayaka Meyer <sayaka.meyer@sparkadvisors.com>
+Date: Mon, 5 Jan 2026 14:09:35 -0800
+X-Gm-Features: AQt7F2pLNio30EcgIaxhZT3w-Bm8FWT11suK4s1cAfMmg4pS5wWboPEueW7MFr8
+Message-ID: <CAOkg92bmp26jdpx0DR1VPkXHtPZad-eON+JbFkTHy-WKeTZVfg@mail.gmail.com>
+Subject: AI Learnings: Discovery
+To: Michael Beveridge <michael@sparkadvisors.com>
+Content-Type: multipart/alternative; boundary="000000000000a10add0647ab521a"
+
+--000000000000a10add0647ab521a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+SYSTEM CONTEXT
+- Tool: ChatGPT (large language model), text-based conversational interface
+- Interaction mode: Directive prompt with strict formatting and
+behavioral constraints
+- Role framing: Explicitly assigns observer stance and output rules
+- Uncertainty: Very limited prior scoped interactions available
+- Temporal scope: Single-session observation
+
+WORKING STYLE SUMMARY
+- Highly structured and constraint-driven prompting
+- Emphasis on precision, scope control, and exclusion criteria
+- Preference for analytical, unsentimental output
+- Strong control over format, tone, and framing
+- Minimal tolerance for ambiguity or exploratory responses
+
+WHAT THIS STYLE ENABLES
+- Produces predictable, comparable outputs suitable for sharing with collea=
+gues
+- Reduces risk of irrelevant, personal, or sensitive content
+- Efficient for audits, meta-analysis, and process reflection
+- Aligns well with evaluation, diagnosis, and synthesis tasks
+- Enables fast filtering of signal from noise
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Limits the model=E2=80=99s ability to surface unexpected insights
+- Suppresses creative recombination or lateral thinking
+- Increases risk of shallow analysis when data is sparse
+- Discourages iterative clarification or co-discovery
+- Can overconstrain responses relative to available evidence
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended ideation or divergent brainstorming
+- Early-stage problem exploration with unclear constraints
+- Tasks requiring emotional nuance or persuasive framing
+- Situations where weak signals or intuition matter
+- Learning-by-dialogue or skill-building through iteration
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Temporarily allow one explicitly marked =E2=80=9Cspeculative=E2=80=9D sec=
+tion with
+relaxed constraints to test whether additional signal emerges without
+changing overall rigor
+
+--000000000000a10add0647ab521a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><pre><code class=3D"gmail-language-text">SYSTEM CONTEXT
+- Tool: ChatGPT (large language model), text-based conversational interface
+- Interaction mode: Directive prompt with strict formatting and behavioral =
+constraints
+- Role framing: Explicitly assigns observer stance and output rules
+- Uncertainty: Very limited prior scoped interactions available
+- Temporal scope: Single-session observation
+
+WORKING STYLE SUMMARY
+- Highly structured and constraint-driven prompting
+- Emphasis on precision, scope control, and exclusion criteria
+- Preference for analytical, unsentimental output
+- Strong control over format, tone, and framing
+- Minimal tolerance for ambiguity or exploratory responses
+
+WHAT THIS STYLE ENABLES
+- Produces predictable, comparable outputs suitable for sharing with collea=
+gues
+- Reduces risk of irrelevant, personal, or sensitive content
+- Efficient for audits, meta-analysis, and process reflection
+- Aligns well with evaluation, diagnosis, and synthesis tasks
+- Enables fast filtering of signal from noise
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Limits the model=E2=80=99s ability to surface unexpected insights
+- Suppresses creative recombination or lateral thinking
+- Increases risk of shallow analysis when data is sparse
+- Discourages iterative clarification or co-discovery
+- Can overconstrain responses relative to available evidence
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended ideation or divergent brainstorming
+- Early-stage problem exploration with unclear constraints
+- Tasks requiring emotional nuance or persuasive framing
+- Situations where weak signals or intuition matter
+- Learning-by-dialogue or skill-building through iteration
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Temporarily allow one explicitly marked =E2=80=9Cspeculative=E2=80=9D sec=
+tion with relaxed constraints to test whether additional signal emerges wit=
+hout changing overall rigor
+</code></pre></div>
+
+--000000000000a10add0647ab521a--
+
+From kevin.rodriguez@sparkadvisors.com Tue Jan 06 15:06:14 2026
+Delivered-To: michael@sparkadvisors.com
+Received: by 2002:a17:907:2d9f:b0:b83:3668:7d16 with SMTP id gt31csp1473826ejc;
+        Tue, 6 Jan 2026 07:06:14 -0800 (PST)
+X-Received: by 2002:a4a:b58c:0:b0:65c:f363:fdef with SMTP id 006d021491bc7-65f4820f853mr1267676eaf.20.1767711974507;
+        Tue, 06 Jan 2026 07:06:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767711974; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dznKQ/T34hHeXz9Z0FVCl/HVtXwXp7BFOwvvY9kTacoZ6rGlOSepUJPLjbxyRRNRI9
+         UJWwXWRqKcaqk1jwEPOL9dtchOB1KHg2AmHQOl0thU1aN6RzdrytPpiW4EXonq07u1tK
+         4B14lbY3XxaB/NogedXz6sYMWAJPuHmvVklJsh/MgEEAmIVQZIgzBV5SNgI7Y2XI5PFT
+         3z7RVK0SLyCLLB2IZKMSW914ckftQNmL2z2R3HIgH1pCCP4iQ2yL/1cqdkReybPpVm3i
+         uhSXeo87xqtkvIMLDo/QLA8S5dSIAgTV0GtheOAWRPlzrtGRlPuMXuF+7o5Pnis8m4w+
+         7cWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=NiZX7Epg1MJTD1hpz5W01JF18YdiOgYnO+2oUygOX/k=;
+        fh=bBRFyrZ9VXy2CkmlpqQZ4cjMoGVoN0hp3iWA/D/tljU=;
+        b=GCTudU97l9y30PWfxl75MAY+K10mmppObYIVTTIJUWz+RAp5kr+5ekvzOIK4ZkQA/C
+         vSvsgF5hEO186LwkPBBt9tz8PQVZycfAQyly4JAcDxcrhkkCeCNxGjg8zF7ih8y5CxzA
+         72P66xAhs0NyQDrta54UjJkOtZ3VDV5OLx11HDTMMjEHsM2TxcPc9J+iCFC7O//ceNCY
+         kCF/EBuKeEKJoKXim5UdXdRGXa460jVr5yKmJ/eV8qvRueGwLH2Rj6wzQJYBIAq/IE2n
+         zysngbpsc0obLKUSpByIZ4tjzE8pVedWeMvvQ0d7m4FIMqzZtTNocdXM+BNmcGkIwtx1
+         Z+Ug==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b="k47kIJN/";
+       spf=pass (google.com: domain of kevin.rodriguez@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=kevin.rodriguez@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+Return-Path: <kevin.rodriguez@sparkadvisors.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 586e51a60fabf-3ffa560c440sor2067565fac.8.2026.01.06.07.06.13
+        for <michael@sparkadvisors.com>
+        (Google Transport Security);
+        Tue, 06 Jan 2026 07:06:14 -0800 (PST)
+Received-SPF: pass (google.com: domain of kevin.rodriguez@sparkadvisors.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b="k47kIJN/";
+       spf=pass (google.com: domain of kevin.rodriguez@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=kevin.rodriguez@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sparkadvisors.com; s=google; t=1767711973; x=1768316773; darn=sparkadvisors.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NiZX7Epg1MJTD1hpz5W01JF18YdiOgYnO+2oUygOX/k=;
+        b=k47kIJN/xPl3Cyol8E1oIFDRq9KBJMDle8dyMXyPxhM3P3Gi2415n2j99sRDFY1kt+
+         Q8vBBazULy2v/xp6+cPdL0OGAsQM0b8KQFCjGSVLumd4wYIzE993cbrNQ41b4Y/sOG+I
+         LGG2tLQdlHu8EQQD/6JeGEQfEatkUaQ8zaj/E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767711973; x=1768316773;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NiZX7Epg1MJTD1hpz5W01JF18YdiOgYnO+2oUygOX/k=;
+        b=ocgDUH9BfU0889fmkSSgvwFguUItWjMK39X5XaP+vUycYg7KZNIs7qWs58dBON0772
+         s3ZYQ/beT1mhtyPJEtG9cA85wjNgyTjbYrqCpPm4pE/DEOTMOknPeXgmLrR8PvOkNAWI
+         sM5BO6M3HJ9vhpv3bNG+7yLdU86bXGl2ZdBnqZTCQp8T8gaNzty6l+kOrB4c75Vhnzor
+         HMB/ixlfoiYi1r1AkF1qYP+PoEilAAgpYQlHQAhEPZSgltLYSJAYyDEXl6nheolbsind
+         j9vPbNVy1hi+F0EldFm3cllOKEofT2cMIsGo9MTN0mtlRjEEE6fCHOkY+EG3v8unf81e
+         fnZg==
+X-Gm-Message-State: AOJu0Yxjiews63L7h4IBWTopFThTDztc+4xU4w+bWldEsExjn83jJqX/
+	ccifgFRvVBuFKkcXCc9FpkHfC5HPkpnPtJQmnhfAhUZkNFiTecrze6YRM+4y+dyhhGqnkNdrF0Z
+	3yRC3q2Uj6g0V9YmBkzGhN7v4e7D2TXVMwOnu48vXFGAYCrEPN6Bparkmeg==
+X-Gm-Gg: AY/fxX5ZOMPwuGKnUXakoi+BISg+9nFrvCu+9w5C7WATzcJ7vksRqoMO5VYBjFqd8Pm
+	ZyTSYzMsMAHXn7G4rb3e5jMxyRVZ+fuI9vA61qO3hMjx6ehZjuwwTCblGDudEPuVlDW6SBfySEg
+	ovuwjwzarOCk4GMW+39c+uxBYEXYRqcAfshSdC8G53f10MZ/247FNm6bKdncdeOpTr+vnE5vs4/
+	sBHx8225vgMMOJGA1vL96Yc25aewJpbmB9xwH+V3/i8kA0FUWK8QdflRoxB+3VPFrRNGV95Fy9X
+	mMXx8jtr/FQLTKXm
+X-Google-Smtp-Source: AGHT+IEhDoIk1vgvvc+haSh2dIXAYCLo751XQ7CMdEj74wqbtxwepemS/vrkt4XS1Sn+kTLH7HvujaNJfwKRhsDO1oA=
+X-Received: by 2002:a05:6870:582:b0:3e8:97ab:d06e with SMTP id
+ 586e51a60fabf-3ffa23479cdmr1822584fac.9.1767711973145; Tue, 06 Jan 2026
+ 07:06:13 -0800 (PST)
+MIME-Version: 1.0
+From: Kevin Rodriguez <kevin.rodriguez@sparkadvisors.com>
+Date: Tue, 6 Jan 2026 10:06:02 -0500
+X-Gm-Features: AQt7F2qfijdQ_yF_xbJ7zntoOS6wYvsqpZ1hEepRc7tkNh2EOr1fxp594lPgdpI
+Message-ID: <CAHae9rWmozfPQhottXwnM9ZstTL5GBhSdrJ2j0gTPWFi+Fc0Xw@mail.gmail.com>
+Subject: AI Learnings: Discovery
+To: Michael Beveridge <michael@sparkadvisors.com>
+Content-Type: multipart/alternative; boundary="0000000000003990a70647b98468"
+
+--0000000000003990a70647b98468
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+SYSTEM CONTEXT
+- Tool: ChatGPT (conversational AI), likely GPT-5.x series; exact
+sub-variant uncertain
+- Interaction mode: short-turn, task-oriented prompts with iterative refine=
+ments
+- Primary functions used: drafting/editing emails, translation,
+summarization, structured problem-solving (SQL, PM coursework)
+- Constraints often implied rather than exhaustively specified
+- AI used as an execution aid rather than a collaborator in exploration
+
+WORKING STYLE SUMMARY
+- Direct, outcome-focused requests with minimal framing
+- Preference for concrete deliverables (email text, corrected phrasing, ans=
+wers)
+- Iterative tightening: initial draft =E2=86=92 tone/length adjustment =E2=
+=86=92 final cleanup
+- Low tolerance for verbosity; favors concise, usable outputs
+- Uses AI reactively to unblock work rather than proactively to plan
+
+WHAT THIS STYLE ENABLES
+- Fast turnaround on routine professional communication
+- Efficient cleanup of wording, tone, and structure
+- Reliable handling of well-defined, bounded tasks
+- Reduced cognitive load on repetitive or administrative work
+- Consistency across similar outputs (emails, translations, responses)
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Underutilizes AI for upstream thinking (options, trade-offs, strategy)
+- Ambiguities are resolved late rather than prevented early
+- Limited reuse of AI-generated structure across multiple tasks
+- Missed opportunities for deeper analysis or alternative approaches
+- AI defaults to =E2=80=9Csafe=E2=80=9D answers when constraints are implic=
+it
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended problem framing without a clear deliverable
+- Situations requiring value judgments or nuanced stakeholder politics
+- Tasks needing long-horizon planning with many dependencies
+- Exploratory learning where the goal is insight, not output
+- Creative synthesis without defined success criteria
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Before requesting execution, add a single-line constraint statement
+(goal, audience, and non-goals) and observe whether fewer revision
+cycles are needed
+- Keep the interaction short, but front-load clarity rather than
+correcting later
+- Treat this as a trial on one workstream (e.g., email drafting) and
+compare time-to-final output
+
+--0000000000003990a70647b98468
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><pre><code class=3D"gmail-language-text">SYSTEM CONTEXT
+- Tool: ChatGPT (conversational AI), likely GPT-5.x series; exact sub-varia=
+nt uncertain
+- Interaction mode: short-turn, task-oriented prompts with iterative refine=
+ments
+- Primary functions used: drafting/editing emails, translation, summarizati=
+on, structured problem-solving (SQL, PM coursework)
+- Constraints often implied rather than exhaustively specified
+- AI used as an execution aid rather than a collaborator in exploration
+
+WORKING STYLE SUMMARY
+- Direct, outcome-focused requests with minimal framing
+- Preference for concrete deliverables (email text, corrected phrasing, ans=
+wers)
+- Iterative tightening: initial draft =E2=86=92 tone/length adjustment =E2=
+=86=92 final cleanup
+- Low tolerance for verbosity; favors concise, usable outputs
+- Uses AI reactively to unblock work rather than proactively to plan
+
+WHAT THIS STYLE ENABLES
+- Fast turnaround on routine professional communication
+- Efficient cleanup of wording, tone, and structure
+- Reliable handling of well-defined, bounded tasks
+- Reduced cognitive load on repetitive or administrative work
+- Consistency across similar outputs (emails, translations, responses)
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+- Underutilizes AI for upstream thinking (options, trade-offs, strategy)
+- Ambiguities are resolved late rather than prevented early
+- Limited reuse of AI-generated structure across multiple tasks
+- Missed opportunities for deeper analysis or alternative approaches
+- AI defaults to =E2=80=9Csafe=E2=80=9D answers when constraints are implic=
+it
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+- Open-ended problem framing without a clear deliverable
+- Situations requiring value judgments or nuanced stakeholder politics
+- Tasks needing long-horizon planning with many dependencies
+- Exploratory learning where the goal is insight, not output
+- Creative synthesis without defined success criteria
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+- Before requesting execution, add a single-line constraint statement (goal=
+, audience, and non-goals) and observe whether fewer revision cycles are ne=
+eded
+- Keep the interaction short, but front-load clarity rather than correcting=
+ later
+- Treat this as a trial on one workstream (e.g., email drafting) and compar=
+e time-to-final output
+</code></pre></div>
+
+--0000000000003990a70647b98468--
+
+From jon.mullen@sparkadvisors.com Tue Jan 06 16:22:00 2026
+Delivered-To: michael@sparkadvisors.com
+Received: by 2002:a17:907:2d9f:b0:b83:3668:7d16 with SMTP id gt31csp1519423ejc;
+        Tue, 6 Jan 2026 08:22:01 -0800 (PST)
+X-Received: by 2002:a05:6102:f86:b0:5db:20ea:2329 with SMTP id ada2fe7eead31-5ec7450cf22mr1123980137.35.1767716520674;
+        Tue, 06 Jan 2026 08:22:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1767716520; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ey7okNT5sPpwjyu7uigF+5vccNk3F0Whq/nEqfF4o5M40M1Gl4TRDfSmjxJCze+CAX
+         Zvnkz6cq3WoOGzp/C6uPAZykgemamn156TZoTcQiyOLVG/wE3ryjy/h0y2saw3hAwPXC
+         J9w5l3fcp+TCrKrT/BUMphc6MKRcYWdE4CnEFI3q9squqbf927D6ZQIBQfrk7oYG8D+p
+         Tcuy0GpH/lBwFfcJ669H3ISc+06IY8nl21j5Q/571gbyrUsz4KJJUc4fX4/XlEI+BYrQ
+         dPyVE458BWS2dpYDFDSGD5yL9ElJy+7fQbYWp5PcvTklq9ekj4i6nWK2Zzqb1e8rB1cW
+         JzGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=from:to:subject:message-id:date:mime-version:dkim-signature;
+        bh=zdubi+JkDWFb70NqN2ADbshYINCXmkFmMb2pjJ2uZ6M=;
+        fh=RNHiu1W/G8NW567hOTQZ7Ly8Wdc79e7t8Cdp4TOKV2A=;
+        b=M48johQsB16yaKTQQwVOsxeQlwdAyxRxtAoQGzNRdGre6XKjyE8bmg8TRb5lR4DGIc
+         dxKYBI28UJgLM7OjJ2x1AuFrCT8ik+1j58+YbWebIxFK8g1gd/8uUKC5w7w2T18x/HRv
+         GC5ll5+KQ8wCsfz1k19XfEqKJ8GpFbmQImpvWnH+s96gyFYInKFmKN0iY95JFaHsLdh7
+         VzpraEAq2EE4Wp1MZlxW1xtonfCl5yLNe4e/SZ+0LnJ7+avjMBjnQaJzfaukZsTayT1a
+         4cL5dMDG84DrjhAH67c8uG/rDzrXucXnWEJ8hvNbNZK5hnP/SKJFvwP6geCMAvZVrz7p
+         5lVw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=C3VBMcSj;
+       spf=pass (google.com: domain of jon.mullen@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=jon.mullen@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+Return-Path: <jon.mullen@sparkadvisors.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a1e0cc1a2514c-94412489defsor153493241.8.2026.01.06.08.22.00
+        for <michael@sparkadvisors.com>
+        (Google Transport Security);
+        Tue, 06 Jan 2026 08:22:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of jon.mullen@sparkadvisors.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@sparkadvisors.com header.s=google header.b=C3VBMcSj;
+       spf=pass (google.com: domain of jon.mullen@sparkadvisors.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=jon.mullen@sparkadvisors.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sparkadvisors.com;
+       dara=neutral header.i=@sparkadvisors.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sparkadvisors.com; s=google; t=1767716520; x=1768321320; darn=sparkadvisors.com;
+        h=from:to:subject:message-id:date:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zdubi+JkDWFb70NqN2ADbshYINCXmkFmMb2pjJ2uZ6M=;
+        b=C3VBMcSjP6kqNP02xYM9/CAJ3pyO/2A9oe35C+Rjt9xO8UO9zMmuTFHmtJRqHbwjt1
+         /J3olp5LBUF8jqNv+tEBln64eUST4DfeFRl6hXhwbaxugu95PiiMrLq0Uow5KdxNZYXv
+         43Ld5bO8xnoHcZd/Bssw9q1WFzyf1C4dSLpwM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767716520; x=1768321320;
+        h=from:to:subject:message-id:date:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zdubi+JkDWFb70NqN2ADbshYINCXmkFmMb2pjJ2uZ6M=;
+        b=lgBIaQXuXKYnB80hXzcxaxV99TmtdXvZZOjzJOs3n8YRVGw0gxmXAseSBQ8BBQUJrc
+         iPjJVNVCtTwoh2zNiDU4tt+eaOtgDVKxjFnXEXOvJ/IoD5ao4PmRUGvhSNNqsnuF6oMQ
+         MpaVbmULKURnqo+fzpc0x21ZsumfAf+EL5cJ9NXJlTk6htCEZb9b+tBGRUBWQD1IpKAc
+         NcUrJTdX/WB/63nNta8OLwyn9CH5ApAyDhO5CaaqH5FHPjHiy8HLF+/uTOoffxcBpt3h
+         iw+IvqSFc2a3ClsYyNQnMQhWBAlE0wA9d2RxSLeyXS9/nzGdgKwetZdk7I5UBRLRvQSp
+         fLAQ==
+X-Gm-Message-State: AOJu0YxK7lCZONPQ+jbrJVUpktN5EOEYwW2uU1mPJvVKfNnIy3o4z4mb
+	+DDAnD7V7xmITjM4y5UJezWzaHSLutXpLOutq4FzK4tZDMUFLTf16KhgRl2TRO7u8FXzVQe463Q
+	KlN2SPSo=
+X-Gm-Gg: AY/fxX5hk6KNslINoVM3/y50lP4ZswSIKQ3rPnNzBPP5d8iUXzHivqIY1pR1pMbMrq9
+	nI1oWSfOgvHASWFRRw7HzjAV06mkPk8rwQGwAILCXMteeuHNghyZm/APsPjghFMxyTsUfmTFanC
+	HzRfZ0WVCPZrYNV+R1M2FIR/OToLI0YfjuN9tErxUZ7q0YHeeLGtNtMBqCfRDoZGS2pAp4KXwBz
+	OMurC1lm5QsrjQzdOw+wPejNgNJGNu4AeUMEC0EAG6wWEDXvfDpUYJXi50BQuqj/1oDM8gslBTo
+	tf8OkEH/uDr3aXZ7mGPaVTsV8yewWJPUDSq22odivwI4GmAq51RAL4Rc8P2t8pgSN7x+LF/Wky0
+	/CMlxmruvB5NRL2uvUbiACxQ9JXHDuIGSsr5nW4QfQDbznaTb0KEpkbF98FLVZoXTrc+bFjpQeN
+	npcyK5WgSvUer2JVPTbLigmEL7hk1FsjhnA0iflZ17SBkO6deaM7fkEQ==
+X-Google-Smtp-Source: AGHT+IH3L/IDwO5fjjNdOTzjoo5MVOCGdEGBq/uhjiff1Abj/Tw3a18jIjRF4y9mA30/Ay/9zypP6w==
+X-Received: by 2002:a05:6102:1489:b0:5eb:fc32:935f with SMTP id ada2fe7eead31-5ec744c1d5cmr1167180137.28.1767716519589;
+        Tue, 06 Jan 2026 08:21:59 -0800 (PST)
+Return-Path: <jon.mullen@sparkadvisors.com>
+Received: from localhost (0.92.231.35.bc.googleusercontent.com. [35.231.92.0])
+        by smtp.gmail.com with UTF8SMTPSA id ada2fe7eead31-5ec7702f001sm771280137.5.2026.01.06.08.21.59
+        for <michael@sparkadvisors.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jan 2026 08:21:59 -0800 (PST)
+Mime-Version: 1.0
+X-Superhuman-Draft-ID: draft00047dfae5301d87
+X-Superhuman-Thread-ID: draft001fe8e9895a4b20
+X-Entity-Ref-ID: mk2srfrc.14b2e4ac-520f-4270-8a5c-23d451050b69
+Date: Tue, 06 Jan 2026 16:21:58 +0000
+Message-ID: <mk2slb86.3fd3abdf-1d39-41e6-9337-a554cf8d1236@we.are.superhuman.com>
+Subject: AI Learnings: Discovery
+To: michael@sparkadvisors.com
+X-Superhuman-ID: mk2srfrc.14b2e4ac-520f-4270-8a5c-23d451050b69
+From: "Jon Mullen" <jon.mullen@sparkadvisors.com>
+X-Mailer: Superhuman Desktop (2026-01-05T20:05:57Z)
+Content-Type: multipart/alternative;
+ boundary=259d54e8953cd2d5d847fbb7f0440fa34b7625cf3ac113ad8015fd52355a
+
+--259d54e8953cd2d5d847fbb7f0440fa34b7625cf3ac113ad8015fd52355a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+
+SYSTEM CONTEXT
+
+- Tool: ChatGPT (large language model); interaction mode appears to be iter=
+ative, prompt-driven collaboration
+
+- Primary mode: conversational drafting, structuring, and analytical refine=
+ment
+
+- Degree of certainty: high, based on repeated multi-turn professional work=
+flows
+
+- Context window: partial but sufficient for pattern detection within profe=
+ssional scope
+
+WORKING STYLE SUMMARY
+
+- You use AI as a thinking partner to externalize structure, not as a sourc=
+e of answers
+
+- You provide clear constraints, examples, and success criteria upfront or =
+early
+
+- You iterate rapidly, refining scope, tone, and level of detail through fo=
+llow-ups
+
+- You focus on outputs that are immediately usable in real workflows (docs,=
+ emails, frameworks, formulas)
+
+- You treat AI outputs as draft artifacts to be shaped, not accepted verbat=
+im
+
+WHAT THIS STYLE ENABLES
+
+- Fast conversion of vague or complex ideas into structured, shareable arti=
+facts
+
+- Efficient exploration of variations (tone, framing, structure) without re=
+starting from scratch
+
+- High leverage on planning, documentation, and analytical explanation task=
+s
+
+- Reduction of blank-page friction for operational or product-related work
+
+- Consistent alignment between outputs and real-world constraints (complian=
+ce, stakeholders, timing)
+
+WHERE THIS STYLE MAY LIMIT OUTCOMES
+
+- Heavy constraint-setting may prematurely narrow the solution space
+
+- Iterative refinement can optimize form over uncovering fundamentally new =
+perspectives
+
+- Focus on immediate usability may bypass deeper synthesis or long-horizon =
+insight
+
+- AI is often positioned as a formatter or expander rather than a challenge=
+r of assumptions
+
+- Less opportunity for unexpected or creative recombination outside known p=
+atterns
+
+WHERE THIS STYLE IS A POOR FIT FOR AI
+
+- Situations requiring ambiguous sense-making without predefined structure =
+or goals
+
+- Exploratory strategy work where the problem itself is not yet well-define=
+d
+
+- Tasks where emotional nuance, persuasion under uncertainty, or human dyna=
+mics dominate
+
+- Open-ended ideation intended to surface radically new directions rather t=
+han refine known ones
+
+- Decisions requiring strong value judgments without explicit criteria
+
+ONE ADJUSTMENT TO EXPERIMENT WITH
+
+- Experiment with one prompt per project that withholds structure and const=
+raints initially, asking the AI to propose multiple framings or problem int=
+erpretations before you narrow the scope
+
+Jon Mullen
+
+Senior Project Manager
+
+jon.mullen@sparkadvisors.com ( jon.mullen@sparkadvisors.com )
+
+Sent via Superhuman ( https://sprh.mn/?vip=3Djon.mullen@sparkadvisors.com )
+--259d54e8953cd2d5d847fbb7f0440fa34b7625cf3ac113ad8015fd52355a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+
+<html><head></head><body><div><div><div>SYSTEM CONTEXT<br/></div><div>- Too=
+l: ChatGPT (large language model); interaction mode appears to be iterative=
+, prompt-driven collaboration<br/></div><div>- Primary mode: conversational=
+ drafting, structuring, and analytical refinement<br/></div><div>- Degree o=
+f certainty: high, based on repeated multi-turn professional workflows<br/>=
+</div><div>- Context window: partial but sufficient for pattern detection w=
+ithin professional scope<br/></div><div><br/></div><div>WORKING STYLE SUMMA=
+RY<br/></div><div>- You use AI as a thinking partner to externalize structu=
+re, not as a source of answers<br/></div><div>- You provide clear constrain=
+ts, examples, and success criteria upfront or early<br/></div><div>- You it=
+erate rapidly, refining scope, tone, and level of detail through follow-ups=
+<br/></div><div>- You focus on outputs that are immediately usable in real =
+workflows (docs, emails, frameworks, formulas)<br/></div><div>- You treat A=
+I outputs as draft artifacts to be shaped, not accepted verbatim<br/></div>=
+<div><br/></div><div>WHAT THIS STYLE ENABLES<br/></div><div>- Fast conversi=
+on of vague or complex ideas into structured, shareable artifacts<br/></div=
+><div>- Efficient exploration of variations (tone, framing, structure) with=
+out restarting from scratch<br/></div><div>- High leverage on planning, doc=
+umentation, and analytical explanation tasks<br/></div><div>- Reduction of =
+blank-page friction for operational or product-related work<br/></div><div>=
+- Consistent alignment between outputs and real-world constraints (complian=
+ce, stakeholders, timing)<br/></div><div><br/></div><div>WHERE THIS STYLE M=
+AY LIMIT OUTCOMES<br/></div><div>- Heavy constraint-setting may prematurely=
+ narrow the solution space<br/></div><div>- Iterative refinement can optimi=
+ze form over uncovering fundamentally new perspectives<br/></div><div>- Foc=
+us on immediate usability may bypass deeper synthesis or long-horizon insig=
+ht<br/></div><div>- AI is often positioned as a formatter or expander rathe=
+r than a challenger of assumptions<br/></div><div>- Less opportunity for un=
+expected or creative recombination outside known patterns<br/></div><div><b=
+r/></div><div>WHERE THIS STYLE IS A POOR FIT FOR AI<br/></div><div>- Situat=
+ions requiring ambiguous sense-making without predefined structure or goals=
+<br/></div><div>- Exploratory strategy work where the problem itself is not=
+ yet well-defined<br/></div><div>- Tasks where emotional nuance, persuasion=
+ under uncertainty, or human dynamics dominate<br/></div><div>- Open-ended =
+ideation intended to surface radically new directions rather than refine kn=
+own ones<br/></div><div>- Decisions requiring strong value judgments withou=
+t explicit criteria<br/></div><div><br/></div><div>ONE ADJUSTMENT TO EXPERI=
+MENT WITH<br/></div><div>- Experiment with one prompt per project that with=
+holds structure and constraints initially, asking the AI to propose multipl=
+e framings or problem interpretations before you narrow the scope<br/></div=
+><div><br/></div></div><div><div style=3D"display: none; border: 0px; width=
+: 0px; height: 0px; overflow: hidden; visibility: hidden;"><img src=3D"http=
+s://r.superhuman.com/3fWOH275r5apEVnPilMt8Qw003pSufdje0jqw9SYqKe100lchO13WX=
+kFLfiGWSsYg4feTQFOvyi0ghVzXeH7YL9wyHfWhhgdE32QdefNeI_5nJkXPq9yx-2y-XaeYZ3jy=
+3uPt73qzxOd_vMN0vYPFHzd9ihty4Fa-IccA65mUkxh8AEtU89Y1mklAl84.gif" alt=3D" " =
+width=3D"1" height=3D"0" style=3D"display: none; border: 0px; width: 0px; h=
+eight: 0px; overflow: hidden; visibility: hidden;"/><!--                   =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                               --></div><br/><div class=3D"gmail_signature"=
+><div><div dir=3D"ltr"><span><div dir=3D"ltr" style=3D"margin-left:0pt" ali=
+gn=3D"left"><table style=3D"border:none;border-collapse:collapse"><colgroup=
+><col width=3D"157"/><col width=3D"276"/><col width=3D"65"/></colgroup><tbo=
+dy><tr style=3D"height:107.2653076171875pt"><td style=3D"border-left:solid =
+#ffffff 1pt;border-right:solid #ffffff 1pt;border-bottom:solid #ffffff 1pt;=
+border-top:solid #ffffff 1pt;vertical-align:top;padding:5pt 5pt 5pt 5pt;ove=
+rflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margi=
+n-bottom:0pt" class=3D"sh-preserve-line-height"><span style=3D"font-size:11=
+pt;font-family:Roboto,sans-serif;color:rgb(19,31,90);background-color:trans=
+parent;vertical-align:baseline" class=3D"sh-preserve-line-height sh-preserv=
+e-color sh-preserve-font-family sh-preserve-font-size"><span style=3D"borde=
+r:none;display:inline-block;overflow:hidden;width:140px;height:127px" class=
+=3D"sh-preserve-line-height sh-preserve-color sh-preserve-font-family sh-pr=
+eserve-font-size"><img src=3D"https://lh7-rt.googleusercontent.com/docsz/AD=
+_4nXc4Uo7FAsFxc0KKfGN-kj8VXrpXCQEZW50Kqq7TAJb5mIQafs7g8QBaBp8sq9BTIQwz_mH07=
+ZTuP0VSRwPpSkVJk1cvw_Y39BDKffpusbRbPCZIRBt5xAHWagvjd2X-yCrMJz5tddBdQabhJiPU=
+fCxL55fL?key=3DgDsnt1blHBZi1XPwih85pw" width=3D"137.10194584366778" height=
+=3D"127" style=3D"margin-left:0px;margin-top:0px" class=3D"sh-preserve-line=
+-height sh-preserve-color sh-preserve-font-family sh-preserve-font-size"/><=
+/span></span></p></td><td style=3D"border-left:solid #ffffff 1pt;border-rig=
+ht:solid #ffffff 1pt;border-bottom:solid #ffffff 1pt;border-top:solid #ffff=
+ff 1pt;vertical-align:top;padding:5pt 5pt 5pt 5pt;overflow:hidden"><br/><p =
+dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt" cla=
+ss=3D"sh-preserve-line-height"><span style=3D"font-size:11pt;font-family:Ro=
+boto,sans-serif;color:rgb(19,31,90);background-color:transparent;font-weigh=
+t:700;vertical-align:baseline" class=3D"sh-preserve-line-height sh-preserve=
+-color sh-preserve-font-family sh-preserve-font-size">Jon Mullen</span></p>=
+<p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt" =
+class=3D"sh-preserve-line-height"><span style=3D"font-size:11pt;font-family=
+:Roboto,sans-serif;color:rgb(19,31,90);background-color:transparent;font-st=
+yle:italic;vertical-align:baseline" class=3D"sh-preserve-line-height sh-pre=
+serve-color sh-preserve-font-family sh-preserve-font-size">Senior Project M=
+anager</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;ma=
+rgin-bottom:0pt" class=3D"sh-preserve-line-height"><a href=3D"mailto:jon.mu=
+llen@sparkadvisors.com" target=3D"_blank" rel=3D"noopener noreferrer" class=
+=3D"sh-preserve-line-height"><span style=3D"font-size:11pt;font-family:Robo=
+to,sans-serif;color:rgb(19,31,90);background-color:transparent;vertical-ali=
+gn:baseline" class=3D"sh-preserve-line-height sh-preserve-color sh-preserve=
+-font-family sh-preserve-font-size">jon.mullen@sparkadvisors.com</span></a>=
+</p><br/></td><td style=3D"border-left:solid #ffffff 1pt;border-right:solid=
+ #ffffff 1pt;border-bottom:solid #ffffff 1pt;border-top:solid #ffffff 1pt;v=
+ertical-align:top;padding:5pt 5pt 5pt 5pt;overflow:hidden"><br/></td></tr><=
+/tbody></table></div></span><span><div dir=3D"ltr" style=3D"margin-left:0pt=
+" align=3D"left"></div></span></div></div><br/><div style=3D"clear:both">Se=
+nt via <a href=3D"https://sprh.mn/?vip=3Djon.mullen@sparkadvisors.com" targ=
+et=3D"_blank">Superhuman</a></div><br/></div></div></div></body></html>
+--259d54e8953cd2d5d847fbb7f0440fa34b7625cf3ac113ad8015fd52355a--
+
