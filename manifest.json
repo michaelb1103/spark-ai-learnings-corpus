@@ -1,0 +1,44 @@
+{
+  "manifest_version": "1.0",
+  "repo": "michaelb1103/spark-ai-learnings-corpus",
+  "default_branch": "main",
+  "updated_at": "2026-01-06",
+  "files": [
+    {
+      "id": "Names, Title and CS",
+      "type": "organization",
+      "path": "org_strengths.csv",
+      "description": "Names, emails and titles"
+    },
+    {
+      "id": "Clifton Strengths Definitions",
+      "type": "clifton",
+      "path": "clifton_strengths_definitions.csv",
+      "description": "CliftonStrengths Defintions"
+    },
+    {
+      "id": "Discovery TOC",
+      "type": "discovery",
+      "path": "discovery_TOC",
+      "description": "Discovery TOC"
+    },
+    {
+      "id": "Discovery Corpus",
+      "type": "discovery",
+      "path": "discovery_corpus",
+      "description": "Discovery Data"
+    },
+    {
+      "id": "Techniques TOC",
+      "type": "techniques",
+      "path": "techniques_TOC",
+      "description": "Techniques TOC"
+    },
+    {
+      "id": "Techniques Corpus",
+      "type": "techniques",
+      "path": "techniques_corpus",
+      "description": "Techniques Data"
+    }
+  ]
+}
