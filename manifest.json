@@ -19,13 +19,13 @@
     {
       "id": "Discovery Corpus",
       "type": "discovery",
-      "path": "discovery_corpus",
+      "path": "discovery_corpus.mbox",
       "description": "Discovery Data"
     },
     {
       "id": "Techniques Corpus",
       "type": "techniques",
-      "path": "techniques_corpus",
+      "path": "techniques_corpus.mbox",
       "description": "Techniques Data"
     }
   ]
