@@ -5,28 +5,28 @@
   "updated_at": "2026-01-06",
   "files": [
     {
-      "id": "Names, Title and CS",
+      "id": "org_strengths",
       "type": "organization",
       "path": "org_strengths.csv",
-      "description": "Names, emails and titles"
+      "description": "Names, emails, titles, and CliftonStrengths"
     },
     {
-      "id": "Clifton Strengths Definitions",
+      "id": "clifton_definitions",
       "type": "clifton",
       "path": "clifton_strengths_definitions.csv",
-      "description": "CliftonStrengths Defintions"
+      "description": "CliftonStrengths definitions"
     },
     {
-      "id": "Discovery Corpus",
+      "id": "discovery_corpus",
       "type": "discovery",
       "path": "discovery_corpus.mbox",
-      "description": "Discovery Data"
+      "description": "Discovery email corpus"
     },
     {
-      "id": "Techniques Corpus",
+      "id": "techniques_corpus",
       "type": "techniques",
       "path": "techniques_corpus.mbox",
-      "description": "Techniques Data"
+      "description": "Techniques email corpus"
     }
   ]
 }
