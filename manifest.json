@@ -17,22 +17,10 @@
       "description": "CliftonStrengths Defintions"
     },
     {
-      "id": "Discovery TOC",
-      "type": "discovery",
-      "path": "discovery_TOC",
-      "description": "Discovery TOC"
-    },
-    {
       "id": "Discovery Corpus",
       "type": "discovery",
       "path": "discovery_corpus",
       "description": "Discovery Data"
-    },
-    {
-      "id": "Techniques TOC",
-      "type": "techniques",
-      "path": "techniques_TOC",
-      "description": "Techniques TOC"
     },
     {
       "id": "Techniques Corpus",
